@@ -1,14 +1,25 @@
 import './App.css';
 import Header from "./header/Header";
-import ProductList from "./product-list/ProductList";
-import {list} from "./product-service";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import ProductsPage from "./pages/ProductsPage";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <Header/>
-      <ProductList products={list()}/>
-    </div>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/products"/>
+        </Route>
+        <Route path="/products">
+          <ProductsPage/>
+        </Route>
+        <Route path="/shopping-cart">
+          <ShoppingCartPage/>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

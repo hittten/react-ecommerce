@@ -8,13 +8,14 @@ class ProductList extends React.Component {
     super(props);
     this.state = {
       gridView: false,
+      products: props.products,
     }
   }
 
   render() {
     return (
       <div className="product-list wrapper">
-        <h1>Products</h1>
+        <h1>{this.props.title}</h1>
         <div className="views">
           <span className={`material-icons ${!this.state.gridView ? 'selected' : ''}`}
                 onClick={() => this.setState({gridView: false})}>
@@ -26,8 +27,8 @@ class ProductList extends React.Component {
           </span>
         </div>
         <ul className={this.state.gridView ? 'grid' : ''}>
-          {this.props.products.map(product =>
-            <li key={product.id}>
+          {this.state.products.map((product, index) =>
+            <li key={index}>
               <h2>{uppercase(product.name)}</h2>
               <img src={product.image} alt={product.name}/>
               <p>
@@ -36,12 +37,20 @@ class ProductList extends React.Component {
               </p>
               <div className="price">{euroCurrency(product.price)}</div>
               <div>
-                <button className="button">add to shopping cart</button>
+                <button
+                  className="button"
+                  onClick={() => this.handleButtonClick(product)}>{this.props.buttonText}
+                </button>
               </div>
             </li>)}
         </ul>
       </div>
     );
+  }
+
+  handleButtonClick(product) {
+    this.props.handleButtonClick(product);
+    this.setState({products: this.props.products});
   }
 }
 
