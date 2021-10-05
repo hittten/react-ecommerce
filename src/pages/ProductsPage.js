@@ -8,7 +8,7 @@ function ProductsPage() {
     <div className="products">
       <ProductList
         title="Products"
-        products={productService.list()}
+        products={productService.list}
         buttonText="add to shopping cart"
         handleButtonClick={productService.addToShoppingCart}
       />

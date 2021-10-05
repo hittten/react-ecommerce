@@ -11,6 +11,9 @@ class CreateProductPage extends React.Component {
         price: '',
         description: '',
       },
+      sending: false,
+      message: '',
+      messageType: 'ok',
       error: {},
     };
 
@@ -50,16 +53,27 @@ class CreateProductPage extends React.Component {
       return
     }
 
-    productService.create({...this.state.form, image: this.fileInput.current.files[0]})
+    this.setState({sending: true});
 
-    this.setState({
-      form: {
-        name: '',
-        price: '',
-        description: '',
-      },
-      error: {},
-    })
+    productService.create({...this.state.form, image: this.fileInput.current.files[0]})
+      .then((product) => {
+        this.setState({
+          form: {
+            name: '',
+            price: '',
+            description: '',
+          },
+          error: {},
+          message: `Product ${product.name} was created!`,
+          messageType: 'ok',
+          sending: false,
+        })
+
+        event.target.reset()
+        this.fileInput.current.files = null;
+      })
+      .catch(error => this.setState({message: error.message, messageType: 'error'}))
+      .finally(() => this.setState({sending: false}))
 
     event.target.reset()
     this.fileInput.current.files = null;
@@ -86,7 +100,7 @@ class CreateProductPage extends React.Component {
               <input
                 onChange={this.handleInputChange}
                 value={this.state.form.price}
-                name="price" type="number"  required/>
+                name="price" type="number" required/>
             </label>
             {this.state.error.price ? <span>{this.state.error.price}</span> : ''}
           </p>
@@ -105,8 +119,9 @@ class CreateProductPage extends React.Component {
             </label>
           </p>
           <p>
-            <button className="button" type="submit">Save</button>
+            <button disabled={this.state.sending} className="button" type="submit">Save</button>
           </p>
+          {this.state.message ? <span className={this.state.messageType}>{this.state.message}</span> : ''}
         </form>
       </div>
     );

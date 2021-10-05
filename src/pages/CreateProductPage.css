@@ -24,7 +24,12 @@
   height: 100px;
 }
 
-.product-create form span {
+.product-create form span.error {
   font-size: 12px;
   color: red;
+}
+
+.product-create form span.ok {
+  font-size: 12px;
+  color: forestgreen;
 }

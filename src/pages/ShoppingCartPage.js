@@ -5,9 +5,10 @@ function ShoppingCartPage() {
   return (
     <ProductList
       title="Shopping Cart"
-      products={productService.listShoppingCart()}
+      products={productService.listShoppingCart}
       buttonText="remove"
       handleButtonClick={productService.removeFromShoppingCart}
+      update={true}
     />
   );
 }
