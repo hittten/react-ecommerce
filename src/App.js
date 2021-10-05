@@ -3,6 +3,7 @@ import Header from "./header/Header";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import ProductsPage from "./pages/ProductsPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage";
+import CreateProductPage from "./pages/CreateProductPage";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/shopping-cart">
           <ShoppingCartPage/>
+        </Route>
+        <Route path="/create-product">
+          <CreateProductPage/>
         </Route>
       </Switch>
     </Router>
